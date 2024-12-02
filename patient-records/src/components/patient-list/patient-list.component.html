@@ -1,0 +1,46 @@
+<div class="container">
+    <h2 class="my-4">Patient List</h2>
+    <button routerLink="/add-patient" class="btn btn-primary mb-3">
+      Add New Patient
+    </button>
+    
+    <table class="table table-striped table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of patients">
+          <td>{{ patient.id }}</td>
+          <td>{{ patient.name }}</td>
+          <td>{{ patient.age }}</td>
+          <td>{{ patient.gender }}</td>
+          <td>{{ patient.email }}</td>
+          <td>
+            <div class="btn-group" role="group">
+              <button 
+                (click)="viewPatientDetails(patient.id)" 
+                class="btn btn-info btn-sm mr-2">
+                View Details
+              </button>
+              <button 
+                (click)="deletePatient(patient.id)" 
+                class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="patients.length === 0" class="alert alert-info">
+      No patients found. Add a new patient to get started.
+    </div>
+  </div>

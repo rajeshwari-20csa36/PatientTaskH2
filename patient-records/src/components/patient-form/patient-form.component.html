@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="text-center">Add New Patient</h2>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+              <div class="form-group mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="name" 
+                  formControlName="name" 
+                  [ngClass]="{'is-invalid': patientForm.get('name')?.invalid && patientForm.get('name')?.touched}"
+                >
+                <div class="invalid-feedback" *ngIf="patientForm.get('name')?.invalid && patientForm.get('name')?.touched">
+                  <small *ngIf="patientForm.get('name')?.errors?.['required']">Name is required</small>
+                  <small *ngIf="patientForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters long</small>
+                </div>
+              </div>
+  
+              <div class="form-group mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="age" 
+                  formControlName="age"
+                  [ngClass]="{'is-invalid': patientForm.get('age')?.invalid && patientForm.get('age')?.touched}"
+                >
+                <div class="invalid-feedback" *ngIf="patientForm.get('age')?.invalid && patientForm.get('age')?.touched">
+                  <small *ngIf="patientForm.get('age')?.errors?.['required']">Age is required</small>
+                  <small *ngIf="patientForm.get('age')?.errors?.['min']">Age must be 0 or greater</small>
+                  <small *ngIf="patientForm.get('age')?.errors?.['max']">Age must be 120 or less</small>
+                </div>
+              </div>
+  
+              <div class="form-group mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select 
+                  class="form-control" 
+                  id="gender" 
+                  formControlName="gender"
+                  [ngClass]="{'is-invalid': patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched}"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched">
+                  <small>Gender is required</small>
+                </div>
+              </div>
+  
+              <div class="form-group mb-3">
+                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  id="dateOfBirth" 
+                  formControlName="dateOfBirth"
+                  [ngClass]="{'is-invalid': patientForm.get('dateOfBirth')?.invalid && patientForm.get('dateOfBirth')?.touched}"
+                >
+                <div class="invalid-feedback" *ngIf="patientForm.get('dateOfBirth')?.invalid && patientForm.get('dateOfBirth')?.touched">
+                  <small>Date of Birth is required</small>
+                </div>
+              </div>
+  
+              <div class="form-group mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  id="email" 
+                  formControlName="email"
+                  [ngClass]="{'is-invalid': patientForm.get('email')?.invalid && patientForm.get('email')?.touched}"
+                >
+                <div class="invalid-feedback" *ngIf="patientForm.get('email')?.invalid && patientForm.get('email')?.touched">
+                  <small *ngIf="patientForm.get('email')?.errors?.['required']">Email is required</small>
+                  <small *ngIf="patientForm.get('email')?.errors?.['email']">Invalid email format</small>
+                </div>
+              </div>
+  
+              <div class="text-center">
+                <button 
+                  type="submit" 
+                  class="btn btn-primary" 
+                  [disabled]="patientForm.invalid"
+                >
+                  Add Patient
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-secondary ml-2" 
+                  routerLink="/patients"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

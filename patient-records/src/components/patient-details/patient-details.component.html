@@ -1,0 +1,53 @@
+<div class="container" *ngIf="patient">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="text-center">Patient Details</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="card-title">Personal Information</h5>
+                <p><strong>ID:</strong> {{ patient.id }}</p>
+                <p><strong>Name:</strong> {{ patient.name }}</p>
+                <p><strong>Age:</strong> {{ patient.age }}</p>
+                <p><strong>Gender:</strong> {{ patient.gender }}</p>
+              </div>
+              <div class="col-md-6">
+                <h5 class="card-title">Contact Information</h5>
+                <p><strong>Email:</strong> {{ patient.email }}</p>
+                <p><strong>Date of Birth:</strong> {{ patient.dateOfBirth | date:'mediumDate' }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button 
+              routerLink="/patients" 
+              class="btn btn-secondary mr-2"
+            >
+              Back to List
+            </button>
+            <button 
+              routerLink="/add-patient" 
+              class="btn btn-primary"
+            >
+              Add New Patient
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!patient" class="container text-center mt-5">
+    <div class="alert alert-warning">
+      Patient not found. Please check the patient ID.
+    </div>
+    <button 
+      routerLink="/patients" 
+      class="btn btn-primary"
+    >
+      Back to Patient List
+    </button>
+  </div>
