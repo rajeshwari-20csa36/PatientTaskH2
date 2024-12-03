@@ -31,6 +31,14 @@ public class BillingController {
     public ResponseEntity<BillingDetails> createBill(@RequestBody BillingDetails billingDetails) {
         return ResponseEntity.ok(billingService.createBill(billingDetails));
     }
+    @PostMapping("/trans")
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
+        return ResponseEntity.ok(billingService.createTransaction(transaction));
+    }
+    @GetMapping("/trans")
+    public ResponseEntity<List<Transaction>> getTransaction() {
+        return ResponseEntity.ok(billingService.getTransactionHistory());
+    }
 
 //    @PostMapping("/transactions")
 //    public ResponseEntity<Transaction> recordTransaction(@RequestBody Transaction transaction) {

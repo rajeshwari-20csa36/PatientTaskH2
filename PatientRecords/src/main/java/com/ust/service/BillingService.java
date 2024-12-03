@@ -58,6 +58,8 @@ public class BillingService {
 
 
     public BillingDetails createBill(BillingDetails billing){
+        double bill= billing.getServiceCharge()+ billing.getConsultationFee()+ billing.getMedicationCharge();
+        billing.setTotalAmount(bill);
         return billingDetailsRepository.save(billing);
     }
 
@@ -65,8 +67,10 @@ public class BillingService {
         return billingDetailsRepository.findAll();
     }
 
-
-
-
-
+    public Transaction createTransaction(Transaction transaction){
+        return transactionRepository.save(transaction);
+    }
+    public List<Transaction> getTransactionHistory(){
+        return transactionRepository.findAll();
+    }
 }

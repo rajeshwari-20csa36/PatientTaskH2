@@ -23,7 +23,7 @@ public class BillingDetails {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id", nullable = false)
+   // @JoinColumn(name = "patient_id", nullable = false)
     @JsonBackReference
     private Patient patient;
     private LocalDate billDate;
