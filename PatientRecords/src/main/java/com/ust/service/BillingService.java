@@ -49,6 +49,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,20 +58,34 @@ public class BillingService {
     private final TransactionRepository transactionRepository;
 
 
-    public BillingDetails createBill(BillingDetails billing){
-        double bill= billing.getServiceCharge()+ billing.getConsultationFee()+ billing.getMedicationCharge();
+    public BillingDetails createBill(BillingDetails billing) {
+        double bill = billing.getServiceCharge() + billing.getConsultationFee() + billing.getMedicationCharge();
         billing.setTotalAmount(bill);
         return billingDetailsRepository.save(billing);
     }
 
-    public List<BillingDetails> getBillingDetailHistory(){
+    public List<BillingDetails> getBillingDetailHistory() {
         return billingDetailsRepository.findAll();
     }
 
-    public Transaction createTransaction(Transaction transaction){
+    public Transaction createTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
-    public List<Transaction> getTransactionHistory(){
+
+    public List<Transaction> getTransactionHistory() {
         return transactionRepository.findAll();
+    }
+
+    public void updateBill(Long id) {
+        Optional<BillingDetails> billingDetails = billingDetailsRepository.findById(id);
+        if (billingDetails.isPresent()) {
+            BillingDetails billing = billingDetails.get();
+            Optional<Transaction> traction = transactionRepository.findById((long) transactionRepository.findAll().size());
+            if (traction.isPresent()) {
+                double update = billing.getTotalAmount() - traction.get().getAmount();
+                billing.setTotalAmount(update);
+            }
+            billingDetailsRepository.save(billing);
+        }
     }
 }

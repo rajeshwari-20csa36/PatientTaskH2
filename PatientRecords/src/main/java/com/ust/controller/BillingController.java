@@ -31,6 +31,10 @@ public class BillingController {
     public ResponseEntity<BillingDetails> createBill(@RequestBody BillingDetails billingDetails) {
         return ResponseEntity.ok(billingService.createBill(billingDetails));
     }
+    @GetMapping("/bills")
+    public ResponseEntity<List<BillingDetails>> getBills() {
+        return ResponseEntity.ok(billingService.getBillingDetailHistory());
+    }
     @PostMapping("/trans")
     public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
         return ResponseEntity.ok(billingService.createTransaction(transaction));
@@ -40,6 +44,11 @@ public class BillingController {
         return ResponseEntity.ok(billingService.getTransactionHistory());
     }
 
+    @PutMapping("/bills/{id}")
+    public ResponseEntity<String> updateBill(@PathVariable Long id) {
+        billingService.updateBill(id);
+        return ResponseEntity.ok("Updated");
+    }
 //    @PostMapping("/transactions")
 //    public ResponseEntity<Transaction> recordTransaction(@RequestBody Transaction transaction) {
 //        return ResponseEntity.ok(billingService.recordTransaction(transaction));
