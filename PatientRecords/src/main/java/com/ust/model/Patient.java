@@ -1,5 +1,7 @@
 package com.ust.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "patients")
+//@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Patient {
 
     @Id
@@ -23,10 +27,12 @@ public class Patient {
     private String gender;
     private LocalDate dateOfBirth;
     private String email;
+//
+//    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private List<Transaction> transactions;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
-
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<BillingDetails> billingDetails;
 }
