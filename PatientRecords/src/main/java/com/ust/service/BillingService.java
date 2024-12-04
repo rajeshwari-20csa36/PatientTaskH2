@@ -61,6 +61,7 @@ public class BillingService {
     public BillingDetails createBill(BillingDetails billing) {
         double bill = billing.getServiceCharge() + billing.getConsultationFee() + billing.getMedicationCharge();
         billing.setTotalAmount(bill);
+        billing.setIsFullyPaid(false);
         return billingDetailsRepository.save(billing);
     }
 
@@ -84,6 +85,10 @@ public class BillingService {
             if (traction.isPresent()) {
                 double update = billing.getTotalAmount() - traction.get().getAmount();
                 billing.setTotalAmount(update);
+            }
+            if(billing.getTotalAmount()==0)
+            {
+                billing.setIsFullyPaid(true);
             }
             billingDetailsRepository.save(billing);
         }
