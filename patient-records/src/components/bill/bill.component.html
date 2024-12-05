@@ -1,9 +1,9 @@
 <div class="container my-5">
-    <!-- Header for Create or View Mode -->
+
     <h2 *ngIf="mode === 'create'" class="text-center">Create Bill for Patient #{{ patientId }}</h2>
     <h2 *ngIf="mode === 'view'" class="text-center">View Billing Details for Patient #{{ patientId }}</h2>
   
-    <!-- Bill Creation Form (Only Visible in Create Mode) -->
+   
     <form *ngIf="mode === 'create'" [formGroup]="billingForm" (ngSubmit)="createBill()">
       <div class="row mb-3">
         <div class="col-md-6">
@@ -74,7 +74,7 @@
       </div>
     </form>
   
-    <!-- Transaction Form (Visible after bill creation) -->
+
     <div *ngIf="mode === 'create' && currentBillingId" class="mt-4">
       <h3>Add Transaction</h3>
       <form [formGroup]="transactionForm" (ngSubmit)="addTransaction()">
@@ -138,7 +138,7 @@
       </form>
     </div>
   
-    <!-- Transactions Table -->
+ 
     <div *ngIf="transactions.length > 0" class="mt-4">
       <h3>Transactions</h3>
       <table class="table table-striped table-bordered">
@@ -165,7 +165,7 @@
       </table>
     </div>
   
-    <!-- Billing Details Section (for View Mode) -->
+
     <div *ngIf="mode === 'view' && billingDetails" class="mt-5">
       <h3 class="text-center">Billing Details</h3>
       <div class="card">
@@ -185,7 +185,7 @@
             </div>
           </div>
   
-          <!-- Detailed Transactions Table in View Mode -->
+
           <h4 class="mt-4">Transaction History</h4>
           <table class="table table-striped table-bordered">
             <thead>

@@ -26,7 +26,7 @@ export class BillComponent implements OnInit {
   currentBillingId: number | null = null;
   remainingAmount: number = 0;
 
-  // Enum for payment methods and transaction types
+
   paymentMethods = Object.values(PaymentMethod);
   transactionTypes = Object.values(TransactionType);
 
@@ -37,7 +37,7 @@ export class BillComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    // Initialize billing form
+   
     this.billingForm = this.fb.group({
       serviceDescription: ['', Validators.required],
       serviceCharge: [0, [Validators.required, Validators.min(0)]],
@@ -46,7 +46,7 @@ export class BillComponent implements OnInit {
       dueDate: ['', Validators.required],
     });
 
-    // Initialize transaction form
+   
     this.transactionForm = this.fb.group({
       amount: [0, [Validators.required, Validators.min(0)]],
       paymentMethod: ['', Validators.required],
@@ -56,29 +56,27 @@ export class BillComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Get query parameters from the route
+   
     this.route.queryParams.subscribe((params) => {
       this.mode = params['mode'] || 'create';
       this.patientId = +params['patientId'] || null;
 
-      // If in view mode, load billing details
+      
       if (this.mode === 'view' && this.patientId) {
         this.loadBillingDetails();
       }
 
-      // If no patientId is provided, redirect to home page
       if (!this.patientId) {
         this.router.navigate(['/']);
       }
     });
   }
 
-  // Method to create a new bill
+
   createBill(): void {
     const billingDetails: BillingDetails = {
       ...this.billingForm.value,
       patient: { id: this.patientId } as any,
-      // Calculate total amount
       totalAmount: this.calculateTotalAmount()
     };
 
@@ -87,11 +85,9 @@ export class BillComponent implements OnInit {
         this.billingDetails = response;
         this.currentBillingId = response.id || null;
         this.transactions = response.transactions || [];
-        
-        // Set remaining amount
+   
         this.remainingAmount = response.totalAmount || 0;
-        
-        // Update transaction form with remaining amount
+    
         this.transactionForm.patchValue({
           amount: this.remainingAmount
         });
@@ -105,13 +101,11 @@ export class BillComponent implements OnInit {
     });
   }
 
-  // Calculate total amount
   calculateTotalAmount(): number {
     const { serviceCharge, medicationCharge, consultationFee } = this.billingForm.value;
     return (serviceCharge || 0) + (medicationCharge || 0) + (consultationFee || 0);
   }
 
-  // Method to add a transaction to the current bill
   addTransaction(): void {
     if (!this.currentBillingId) {
       alert('Please create a bill first.');
@@ -129,7 +123,7 @@ export class BillComponent implements OnInit {
         this.billingDetails = updatedBillingDetails;
         this.transactions = updatedBillingDetails.transactions || [];
         
-        // Recalculate remaining amount
+
         this.updateRemainingAmount();
 
         this.transactionForm.reset({
@@ -148,7 +142,7 @@ export class BillComponent implements OnInit {
     });
   }
 
-  // Update remaining amount based on existing transactions
+
   updateRemainingAmount(): void {
     if (this.billingDetails) {
       const totalTransactions = this.transactions.reduce((sum, transaction) => 
@@ -157,7 +151,7 @@ export class BillComponent implements OnInit {
     }
   }
 
-  // Method to load billing details when in view mode
+
   loadBillingDetails(): void {
     if (this.patientId) {
       this.billingService.getBillingDetailsById(this.patientId).subscribe({
@@ -165,8 +159,7 @@ export class BillComponent implements OnInit {
           this.billingDetails = details;
           this.currentBillingId = details.id || null;
           this.transactions = details.transactions || [];
-          
-          // Calculate remaining amount for view mode
+ 
           this.updateRemainingAmount();
         },
         error: (error) => {
@@ -177,7 +170,6 @@ export class BillComponent implements OnInit {
     }
   }
 
-  // Calculate total paid amount
   calculateTotalPaid(): number {
     return this.transactions.reduce((sum, transaction) => 
       sum + (transaction.amount || 0), 0);
