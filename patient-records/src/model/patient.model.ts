@@ -1,3 +1,5 @@
+import { BillingDetails } from "./BillingDetails.model";
+
 export interface Patient {
     id: number;
     name: string;
@@ -5,4 +7,5 @@ export interface Patient {
     gender: string;
     dateOfBirth: string;
     email: string;
+    billingDetails?: BillingDetails[];
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Patient } from '../../model/patient.model';
 import { PatientService } from '../../service/patient.service';
 
@@ -8,7 +8,7 @@ import { PatientService } from '../../service/patient.service';
 @Component({
   selector: 'app-patient-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink,CommonModule],
   templateUrl: './patient-details.component.html',
   styleUrls: ['./patient-details.component.css']
 })

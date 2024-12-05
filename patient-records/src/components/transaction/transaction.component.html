@@ -1,0 +1,65 @@
+<div class="container my-5">
+    <h2>Create Transaction</h2>
+  
+    <!-- Transaction Form -->
+    <form [formGroup]="transactionForm" (ngSubmit)="createTransaction()">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="transactionDate" class="form-label">Transaction Date</label>
+          <input id="transactionDate" type="date" class="form-control" formControlName="transactionDate" />
+        </div>
+        <div class="col-md-6">
+          <label for="transactionType" class="form-label">Transaction Type</label>
+          <input id="transactionType" type="text" class="form-control" formControlName="transactionType" placeholder="Enter transaction type" />
+        </div>
+      </div>
+  
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="amount" class="form-label">Amount</label>
+          <input id="amount" type="number" class="form-control" formControlName="amount" placeholder="Enter amount" />
+        </div>
+        <div class="col-md-6">
+          <label for="paymentMethod" class="form-label">Payment Method</label>
+          <input id="paymentMethod" type="text" class="form-control" formControlName="paymentMethod" placeholder="Enter payment method" />
+        </div>
+      </div>
+  
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="status" class="form-label">Status</label>
+          <input id="status" type="text" class="form-control" formControlName="status" placeholder="Enter transaction status" />
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="transactionForm.invalid">
+        Create Transaction
+      </button>
+    </form>
+  
+    <!-- Transaction List Section -->
+    <div *ngIf="transactions.length > 0" class="mt-5">
+      <h3>Transaction List</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Transaction Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Payment Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactions">
+            <td>{{ transaction.transactionDate | date }}</td>
+            <td>{{ transaction.transactionType }}</td>
+            <td>{{ transaction.amount | currency }}</td>
+            <td>{{ transaction.paymentMethod }}</td>
+            <td>{{ transaction.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,0 +1,8 @@
+export enum PaymentMethod {
+    CASH = 'CASH',
+    CREDIT_CARD = 'CREDIT_CARD',
+    DEBIT_CARD = 'DEBIT_CARD',
+    INSURANCE = 'INSURANCE',
+    BANK_TRANSFER = 'BANK_TRANSFER',
+    OTHER = 'OTHER'
+}

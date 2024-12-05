@@ -4,7 +4,6 @@ import { Router, RouterModule } from '@angular/router';
 import { Patient } from '../../model/patient.model';
 import { PatientService } from '../../service/patient.service';
 
-
 @Component({
   selector: 'app-patient-list',
   standalone: true,
@@ -14,6 +13,7 @@ import { PatientService } from '../../service/patient.service';
 })
 export class PatientListComponent implements OnInit {
   patients: Patient[] = [];
+  selectedPatientId: number | null = null;
 
   constructor(
     private patientService: PatientService,
@@ -45,5 +45,9 @@ export class PatientListComponent implements OnInit {
       });
     }
   }
-}
 
+
+
+
+
+}

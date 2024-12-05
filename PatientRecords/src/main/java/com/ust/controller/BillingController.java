@@ -10,38 +10,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/patients")
+@RequestMapping("/api/v1/patients/billing")
 @RequiredArgsConstructor
 @CrossOrigin
 public class BillingController {
 
     private final BillingService billingService;
 
-//    @GetMapping("/patient/{patientId}/bills")
-//    public ResponseEntity<List<BillingDetails>> getPatientBillingHistory(@PathVariable Long patientId) {
-//        return ResponseEntity.ok(billingService.getPatientBillingHistory(patientId));
-//    }
-
-//    @GetMapping("/billing/{billingId}/transactions")
-//    public ResponseEntity<List<Transaction>> getTransactionsForBilling(@PathVariable Long billingId) {
-//        return ResponseEntity.ok(billingService.getTransactionsForBilling(billingId));
-//    }
-
-    @PostMapping("/bills")
-    public ResponseEntity<BillingDetails> createBill(@RequestBody BillingDetails billingDetails) {
-        return ResponseEntity.ok(billingService.createBill(billingDetails));
-    }
-    @PostMapping("/trans")
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
-        return ResponseEntity.ok(billingService.createTransaction(transaction));
-    }
-    @GetMapping("/trans")
-    public ResponseEntity<List<Transaction>> getTransaction() {
-        return ResponseEntity.ok(billingService.getTransactionHistory());
+    @PostMapping
+    public ResponseEntity<BillingDetails> createBillWithTransactions(@RequestBody BillingDetails billingDetails) {
+        return ResponseEntity.ok(billingService.createBillWithTransactions(billingDetails));
     }
 
-//    @PostMapping("/transactions")
-//    public ResponseEntity<Transaction> recordTransaction(@RequestBody Transaction transaction) {
-//        return ResponseEntity.ok(billingService.recordTransaction(transaction));
-//    }
+    @GetMapping
+    public ResponseEntity<List<BillingDetails>> getAllBillingDetails() {
+        return ResponseEntity.ok(billingService.getAllBillingDetails());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BillingDetails> getBillingDetailsById(@PathVariable Long id) {
+        return billingService.getBillingDetailsById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<Transaction>> getTransactionsForBilling(@PathVariable Long id) {
+        return ResponseEntity.ok(billingService.getTransactionsForBilling(id));
+    }
+
+    @PostMapping("/{id}/transactions")
+    public ResponseEntity<BillingDetails> addTransactionToBilling(
+            @PathVariable Long id,
+            @RequestBody Transaction transaction
+    ) {
+        return ResponseEntity.ok(billingService.addTransactionToBilling(id, transaction));
+    }
 }
