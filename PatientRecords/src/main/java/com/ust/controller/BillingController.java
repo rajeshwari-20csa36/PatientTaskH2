@@ -26,12 +26,22 @@ public class BillingController {
     public ResponseEntity<List<BillingDetails>> getAllBillingDetails() {
         return ResponseEntity.ok(billingService.getAllBillingDetails());
     }
+<<<<<<< HEAD
 
     @GetMapping("/{id}")
     public ResponseEntity<BillingDetails> getBillingDetailsById(@PathVariable Long id) {
         return billingService.getBillingDetailsById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+=======
+    @GetMapping("/bills")
+    public ResponseEntity<List<BillingDetails>> getBills() {
+        return ResponseEntity.ok(billingService.getBillingDetailHistory());
+    }
+    @PostMapping("/trans")
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
+        return ResponseEntity.ok(billingService.createTransaction(transaction));
+>>>>>>> 76af7680674cca4d71580672c9e761d5b2c35cfb
     }
 
     @GetMapping("/{id}/transactions")
@@ -39,6 +49,7 @@ public class BillingController {
         return ResponseEntity.ok(billingService.getTransactionsForBilling(id));
     }
 
+<<<<<<< HEAD
     @PostMapping("/{id}/transactions")
     public ResponseEntity<BillingDetails> addTransactionToBilling(
             @PathVariable Long id,
@@ -46,4 +57,15 @@ public class BillingController {
     ) {
         return ResponseEntity.ok(billingService.addTransactionToBilling(id, transaction));
     }
+=======
+    @PutMapping("/bills/{id}")
+    public ResponseEntity<String> updateBill(@PathVariable Long id) {
+        billingService.updateBill(id);
+        return ResponseEntity.ok("Updated");
+    }
+//    @PostMapping("/transactions")
+//    public ResponseEntity<Transaction> recordTransaction(@RequestBody Transaction transaction) {
+//        return ResponseEntity.ok(billingService.recordTransaction(transaction));
+//    }
+>>>>>>> 76af7680674cca4d71580672c9e761d5b2c35cfb
 }
