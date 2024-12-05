@@ -35,7 +35,6 @@ public class BillingService {
             transactionRepository.saveAll(billing.getTransactions());
         }
 
-<<<<<<< HEAD
         return savedBilling;
     }
 
@@ -72,41 +71,5 @@ public class BillingService {
 
         transactionRepository.save(transaction);
         return billingDetailsRepository.save(billing);
-=======
-    public BillingDetails createBill(BillingDetails billing) {
-        double bill = billing.getServiceCharge() + billing.getConsultationFee() + billing.getMedicationCharge();
-        billing.setTotalAmount(bill);
-        billing.setIsFullyPaid(false);
-        return billingDetailsRepository.save(billing);
-    }
-
-    public List<BillingDetails> getBillingDetailHistory() {
-        return billingDetailsRepository.findAll();
-    }
-
-    public Transaction createTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
-    }
-
-    public List<Transaction> getTransactionHistory() {
-        return transactionRepository.findAll();
->>>>>>> 76af7680674cca4d71580672c9e761d5b2c35cfb
-    }
-
-    public void updateBill(Long id) {
-        Optional<BillingDetails> billingDetails = billingDetailsRepository.findById(id);
-        if (billingDetails.isPresent()) {
-            BillingDetails billing = billingDetails.get();
-            Optional<Transaction> traction = transactionRepository.findById((long) transactionRepository.findAll().size());
-            if (traction.isPresent()) {
-                double update = billing.getTotalAmount() - traction.get().getAmount();
-                billing.setTotalAmount(update);
-            }
-            if(billing.getTotalAmount()==0)
-            {
-                billing.setIsFullyPaid(true);
-            }
-            billingDetailsRepository.save(billing);
-        }
     }
 }
